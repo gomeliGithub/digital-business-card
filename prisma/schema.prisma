@@ -1,0 +1,56 @@
+generator client {
+    provider     = "prisma-client"
+    output       = "../src/prisma/generated/prisma"
+    moduleFormat = "cjs"
+}
+
+datasource db {
+    provider     = "postgresql"
+}
+
+model Profile {
+    id                      Int             @default(autoincrement()) @id
+    fullName                String          @db.VarChar(40)
+    description             String          @db.VarChar(300)
+    links                   Link[]
+    skills                  Skill[]
+    experiences             Experience[]
+    projects                Project[]
+}
+
+model Link {
+    id                      Int             @default(autoincrement()) @id
+    resource                String          @db.VarChar(15)
+    url                     String          @db.VarChar(150)
+    profile                 Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    profileId               Int
+}
+
+model Skill {
+    id                      Int             @default(autoincrement()) @id
+    name                    String          @unique
+    level                   Int
+    profile                 Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    profileId               Int
+}
+
+model Experience {
+    id                      Int             @default(autoincrement()) @id
+    company                 String          @db.VarChar(20)
+    position                String          @db.VarChar(40)
+    startDate               DateTime
+    endDate                 DateTime?
+    achievements            String?         @db.VarChar(180)
+    profile                 Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    profileId               Int
+}
+
+model Project {
+    id                      Int             @default(autoincrement()) @id
+    name                    String          @db.VarChar(50)
+    link                    String          @db.VarChar(80)
+    description             String          @db.VarChar(120)
+    technologies            String      
+    profile                 Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade)
+    profileId               Int
+}

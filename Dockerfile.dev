@@ -1,0 +1,12 @@
+FROM node:24.12.0-alpine
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./prisma/
+RUN npm install --loglevel=error
+
+RUN npx prisma generate
+
+COPY . .
+
+EXPOSE 3000
