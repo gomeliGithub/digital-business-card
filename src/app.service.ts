@@ -32,7 +32,7 @@ export class AppService {
 
         const buffers: Buffer<ArrayBufferLike>[] = await Promise.all(promises);
 
-        await this.logLineAsync('Sandbox API keys succesfully generate', false, 'internal');
+        await this.logLineAsync('Apollo Sandbox API keys succesfully generate', false, 'internal');
 
         return buffers.map(buffer => buffer.toString('hex'));
     }

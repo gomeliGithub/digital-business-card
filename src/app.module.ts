@@ -88,7 +88,7 @@ export class AppModule implements NestModule {
 
             await fsPromises.writeFile(path.join(configDirPath, 'sandboxAPIKeys.txt'), apiKeysJoinedStr);
 
-            await this._appService.logLineAsync(`Sandbox API keys succesfully write to file ${ path.join(configDirPath, 'sandboxAPIKeys.txt') }. Keys: \n${ apiKeysJoinedStr }`, false, 'internal');
+            await this._appService.logLineAsync(`Apollo Sandbox API keys succesfully write to file ${ path.join(configDirPath, 'sandboxAPIKeys.txt') }. Keys: \n${ apiKeysJoinedStr }`, false, 'internal');
         } catch {
             this._appService.logLineAsync('sandboxAPIKeys.txt file writting error', true, 'internal');
         }

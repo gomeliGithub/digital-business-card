@@ -9,6 +9,8 @@ services:
             - "5432:5432"
         volumes:
             - pgdata:/var/lib/postgresql/data
+        networks:
+            - backend_network
         healthcheck:
             test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
             interval: 10s
@@ -28,10 +30,12 @@ services:
             NODE_ENV: production
         env_file:
             - ./config/.env.production
+        networks:
+            - backend_network
         depends_on:
             db:
                 condition: service_healthy
-        command: sh -c "npx prisma generate && npx prisma db push && npx prisma db seed && npm run start:prod"
+        command: sh -c "npx prisma db push && npx prisma db seed && npm run start:prod"
 
 volumes:
     pgdata:

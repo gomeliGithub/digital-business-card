@@ -1,8 +1,19 @@
-// oxlint-disable-next-line import/no-unassigned-import
-import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import { PrismaClient } from '../prisma/generated/prisma/client';
+
+if ( !process.env.DATABASE_URL ) {
+    try {
+        const { config } = require("dotenv");
+
+        config({
+        path:
+            process.env.NODE_ENV === "production"
+            ? "config/.env.production"
+            : "config/.env.development",
+        });
+    } catch { }
+}
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -73,6 +84,7 @@ async function seed (): Promise<void> {
         }
     });
 
+    // oxlint-disable-next-line no-console
     console.log('Database seeded successfully: ', profile.fullName);
 }
 
@@ -80,6 +92,7 @@ seed().then(async () => {
     await prisma.$disconnect();
     await pool.end();
 }).catch(async (e) => {
+    // oxlint-disable-next-line no-console
     console.error(e);
     
     await prisma.$disconnect();
