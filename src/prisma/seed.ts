@@ -29,7 +29,7 @@ async function seed (): Promise<void> {
     const profile = await prisma.profile.create({
         data: {
             fullName: 'Шитиков Никита',
-            description: 'JavaScript-разработчик с опытом 3+ лет. Специализируюсь на JavaScript-фреймворках, Node.js, NestJS и React',
+            description: 'JavaScript-разработчик с опытом 3+ лет. Работаю с JavaScript-фреймворками (Node.js, NestJS и React)',
             links: {
                 create: [
                     { resource: 'GitHub', url: 'https://github.com/gomeliGithub' },
@@ -46,17 +46,6 @@ async function seed (): Promise<void> {
                     { name: 'React', level: 2 },
                     { name: 'Next.js', level: 2 },
                     { name: 'MySQL', level: 2 }
-                ]
-            },
-            experiences: {
-                create: [
-                    {
-                        company: 'Green',
-                        position: 'Security Guy',
-                        startDate: new Date('2021-11-11'),
-                        endDate: new Date('2026-11-11'),
-                        achievements: null
-                    }
                 ]
             },
             projects: {
